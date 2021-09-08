@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A simple blog API project to help solidfy my back-end skills.",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "node server.js"
   },
