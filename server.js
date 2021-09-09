@@ -20,4 +20,21 @@ sequelize.authenticate()
     console.error('Database connection failed:', err);
   });
 
+const Blog = sequelize.define('blog', {
+  // createdAt and updatedAt are automatically made by Sequelize
+  userId: {
+    type: Sequelize.UUID,
+  },
+  title: {
+    type: Sequelize.STRING,
+  },
+  body: {
+    type: Sequelize.STRING,
+  },
+});
+
+Blog.sync({ force: true }).catch((err) => {
+  console.error(`Model ${this} sync failed:`, err);
+});
+
 app.listen(port, () => console.log(`blog-api listening on port ${port}`));
