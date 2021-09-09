@@ -9,10 +9,6 @@ const sequelize = new Sequelize(
   `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB}`,
 );
 
-app.use(express.json());
-
-app.post('/blogs', (req, res) => res.sendStatus(200));
-
 sequelize.authenticate()
   .then(() => {
     console.log('Database connection established');
@@ -31,6 +27,22 @@ const Blog = sequelize.define('blog', {
   body: {
     type: Sequelize.STRING,
   },
+});
+
+app.use(express.json());
+
+app.post('/blogs', async (req, res) => {
+  try {
+    const newBlog = new Blog({
+      userId: req.body.userId,
+      title: req.body.blog.title,
+      body: req.body.blog.body,
+    });
+    await newBlog.save();
+    res.sendStatus(200);
+  } catch (err) {
+    console.error('Blog creation failed:', err);
+  }
 });
 
 Blog.sync({ force: true }).catch((err) => {
