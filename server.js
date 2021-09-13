@@ -45,7 +45,7 @@ app.post('/blogs', async (req, res) => {
   }
 });
 
-Blog.sync({ force: true }).catch((err) => {
+Blog.sync({ alter: true }).catch((err) => {
   console.error(`Model ${this} sync failed:`, err);
 });
 
